@@ -55,7 +55,8 @@ if st.button("입력 추가"):
             st.success(f"✅ 추가됨: ({site}, {name}, {days}, {deploy})")
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
-
+            
+rerun_needed = False
 # --- 입력 리스트 및 삭제 기능 ---
 if st.session_state.entries:
     st.markdown("#### 현재 입력된 일정")
