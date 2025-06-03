@@ -76,7 +76,8 @@ if st.session_state.entries:
         with col2:
             if st.button("일정 삭제", key=f"del_{i}"):
                 st.session_state.entries.pop(i)
-                st.stop()  # 안전한 재실행
+                st.experimental_rerun()  # 즉시 재렌더링 → 삭제 항목 화면에서 즉시 사라짐
+
 
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
