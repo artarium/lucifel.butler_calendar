@@ -56,7 +56,8 @@ if st.button("입력 추가"):
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
 
-# --- 입력 리스트 및 삭제 기능 ---
+rerun_needed = False  # 이 줄을 꼭 루프 전에 선언
+
 if st.session_state.entries:
     st.markdown("#### 현재 입력된 일정")
     for i, (s, n, d, t) in enumerate(st.session_state.entries):
@@ -67,11 +68,12 @@ if st.session_state.entries:
             if st.button("❌", key=f"del_{i}"):
                 del st.session_state.entries[i]
                 rerun_needed = True
-                break  # 삭제 후 index 재계산 방지
+                break  # 삭제 후 index 충돌 방지
 
+# 루프 바깥에서 조건적으로 rerun 실행
 if rerun_needed:
     st.experimental_rerun()
-
+    
 # --- 연도 및 월 선택 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
 month = st.selectbox("월 선택", list(range(1, 13)), index=5)
