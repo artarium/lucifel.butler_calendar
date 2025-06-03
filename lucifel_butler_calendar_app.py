@@ -45,7 +45,7 @@ deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 
 # --- 이스터에그 ---
 if st.button("입력 추가"):
-    if name == "워커" and "오잉?" in selected_days:
+    if name == "워커" and "💖" in selected_days:
         slot = st.empty()
         slot.markdown("## 💖 워커 집사님 왕왕사랑해요 💖")
         time.sleep(2)
