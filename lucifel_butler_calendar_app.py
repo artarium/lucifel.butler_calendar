@@ -37,7 +37,7 @@ st.markdown("#### 루치펠 집사카페 캘린더 입력 시스템")
 
 st.markdown("""######  
 1. 상단에서 연도와 월을 선택합니다.  
-2. 근무자의 **원 근무지**, **이름**, **근무일**, **해당일 근무지**를 입력합니다.  
+2. 근무자의 **원 근무지**, **이름**, **근무일**, **해당일 근무지**를 입력합니다. (중복 입력도 1번 반영)
 3. 아래 **[입력 추가]** 버튼을 눌러 일정을 등록합니다. 원하시는 집사님들 한번에 출력 가능하니 모두 추가해주세요! 파견 시 이름이 파란글씨로 표기됩니다.
 4. 모든 등록이 끝나면 **[📅 캘린더 출력]** 버튼으로 결과를 확인하고 다운로드할 수 있습니다.
 """)
@@ -90,7 +90,7 @@ if st.session_state.to_delete is not None:
     if 0 <= idx < len(st.session_state.entries):
         deleted_entry = st.session_state.entries[idx]
         del st.session_state.entries[idx]
-        st.toast(f"🗑️ 삭제됨(잠시 후 반영): {deleted_entry[1]} ({deleted_entry[2]})", icon="🗑️")
+        st.toast(f"🗑️ 삭제됨(잠시 후 자동 반영, 버튼 다시 안눌러도 됩니다.): {deleted_entry[1]} ({deleted_entry[2]})", icon="🗑️")
     st.session_state.to_delete = None
 
 # --- 캘린더 그리기 함수 ---
