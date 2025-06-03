@@ -52,7 +52,7 @@ slide_images = {
 slide_keys = list(slide_images.keys())
 selected_slide = st.select_slider("← 설명을 좌우로 넘겨보세요 →", options=slide_keys)
 
-st.image(slide_images[selected_slide], use_column_width=True)
+st.image(slide_images[selected_slide], use_container_width=True)
 
 # --- 연도 및 월 선택: 최상단 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
