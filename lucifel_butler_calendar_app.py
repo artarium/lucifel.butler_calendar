@@ -29,18 +29,23 @@ name_dict_grouped = {
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
-# --- 연도 및 월 선택: 최상단 ---
-year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
-month = st.selectbox("월 선택", list(range(1, 13)), index=5)
-
 st.markdown("#### 루치펠 집사카페 캘린더 입력 시스템")
 
+
+
 st.markdown("""######  
+0. 제가 쓰려고 만든거라 오류가 있을 수 있습니다. (가끔 업데이트 예정)
 1. 상단에서 연도와 월을 선택합니다.  
 2. 근무자의 **원 근무지**, **이름**, **근무일**, **해당일 근무지**를 입력합니다. (중복 입력도 1번 반영)
 3. 아래 **[입력 추가]** 버튼을 눌러 일정을 등록합니다. 원하시는 집사님들 한번에 출력 가능하니 모두 추가해주세요! 파견 시 이름이 파란글씨로 표기됩니다.
 4. 모든 등록이 끝나면 **[📅 캘린더 출력]** 버튼으로 결과를 확인하고 다운로드할 수 있습니다.
 """)
+
+
+# --- 연도 및 월 선택: 최상단 ---
+year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
+month = st.selectbox("월 선택", list(range(1, 13)), index=5)
+
 
 # --- 입력 인터페이스 ---
 site = st.selectbox("원 근무지", ["Bestia", "Inferis", "Pax"])
