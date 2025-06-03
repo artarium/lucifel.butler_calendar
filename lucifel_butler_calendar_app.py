@@ -37,7 +37,7 @@ st.markdown("### 루치펠 집사카페 캘린더 입력 시스템")
 st.markdown("""######  
 1. 상단에서 연도와 월을 선택합니다.  
 2. 근무자의 **원 근무지**, **이름**, **근무일**, **해당일 근무지**를 입력합니다.  
-3. 아래 **[입력 추가]** 버튼을 눌러 일정을 등록합니다.  
+3. 아래 **[입력 추가]** 버튼을 눌러 일정을 등록합니다. 원하시는 집사님들 한번에 출력 가능하니 모두 추가해주세요!
 4. 모든 등록이 끝나면 **[📅 캘린더 출력]** 버튼으로 결과를 확인하고 다운로드할 수 있습니다.
 """)
 
@@ -75,9 +75,9 @@ if st.session_state.entries:
     for i, (s, n, d, t) in enumerate(st.session_state.entries):
         col1, col2 = st.columns([8, 1])
         with col1:
-            st.markdown(f"{n} ({d}) 해당일 **{t}** 근무")
+            st.markdown(f"{n} ({d}) **{t}** 근무")
         with col2:
-            if st.button("❌", key=f"del_{i}"):
+            if st.button("일정 삭제", key=f"del_{i}"):
                 st.session_state.entries.pop(i)
                 st.stop()  # 안전한 재실행
 
