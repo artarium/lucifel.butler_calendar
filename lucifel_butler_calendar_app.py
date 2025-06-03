@@ -57,10 +57,7 @@ if not selected_days:
     st.warning("⚠️ 근무일을 선택해야 입력이 가능합니다.")
 elif st.button("입력 추가"):
     if name == "워커" and "💖" in selected_days:
-        slot = st.empty()
-        slot.markdown("##### 💖 워커 집사님 왕왕사랑해요 💖")
-        time.sleep(1)
-        slot.empty()
+        st.toast("💖 워커 집사님 왕왕사랑해요 💖")
     else:
         try:
             days = [int(d) for d in selected_days if isinstance(d, int)]
