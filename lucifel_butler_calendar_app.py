@@ -76,6 +76,7 @@ if st.session_state.entries:
         with col2:
             if st.button("일정 삭제", key=f"del_{i}"):
                 st.session_state.entries.pop(i)
+                time.sleep(0.1)
                 st.experimental_rerun()  # 즉시 재렌더링 → 삭제 항목 화면에서 즉시 사라짐
 
 
