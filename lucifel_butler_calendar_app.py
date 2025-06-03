@@ -95,7 +95,7 @@ if st.session_state.to_delete is not None:
     if 0 <= idx < len(st.session_state.entries):
         deleted_entry = st.session_state.entries[idx]
         del st.session_state.entries[idx]
-        st.toast(f"🗑️ 삭제됨(잠시 후 자동 반영, 버튼 다시 안눌러도 됩니다.): {deleted_entry[1]} ({deleted_entry[2]})", icon="🗑️")
+        st.toast(f"🗑️ 삭제됨(잠시 후 자동 반영, 버튼 다시 안 눌러도 됩니다.): {deleted_entry[1]} ({deleted_entry[2]})", icon="🗑️")
     st.session_state.to_delete = None
 
 # --- 캘린더 그리기 함수 ---
