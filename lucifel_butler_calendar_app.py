@@ -30,7 +30,7 @@ name_dict_grouped = {
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
-st.title("근무자 캘린더 입력 시스템")
+st.title("루치펠 집사카페 캘린더 입력 시스템")
 
 site = st.selectbox("근무지", ["Bestia", "Inferis", "Pax"])
 name = st.selectbox("이름", list(name_dict_grouped[site].keys()))
