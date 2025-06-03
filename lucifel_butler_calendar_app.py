@@ -88,10 +88,10 @@ if st.session_state.entries:
 if st.session_state.to_delete is not None:
     idx = st.session_state.to_delete
     if 0 <= idx < len(st.session_state.entries):
+        deleted_entry = st.session_state.entries[idx]
         del st.session_state.entries[idx]
+        st.toast(f"🗑️ 삭제됨(잠시 후 반영): {deleted_entry[1]} ({deleted_entry[2]})", icon="🗑️")
     st.session_state.to_delete = None
-    # rerun 대신 무시 (렌더링은 자연히 일어남)
-
 
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
