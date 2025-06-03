@@ -41,29 +41,6 @@ if name == "워커":
 selected_days = st.multiselect("근무일 선택", days_options)
 deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 
-
-
-if st.session_state.entries:
-    st.markdown("#### 현재 입력된 일정")
-    for i, (s, n, d, t) in enumerate(st.session_state.entries):
-        col1, col2 = st.columns([8, 1])
-        with col1:
-            st.markdown(f"- **{s}** → {n} ({d}) → **{t}**")
-        with col2:
-            if st.button("❌", key=f"del_{i}"):
-                del st.session_state.entries[i]
-                rerun_needed = True
-                break  # 삭제 후 index 충돌 방지
-
-# 루프 바깥에서 조건적으로 rerun 실행
-if rerun_needed:
-    st.experimental_rerun()
-    
-# --- 연도 및 월 선택 ---
-year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
-month = st.selectbox("월 선택", list(range(1, 13)), index=5)
-
-
 # --- 이스터에그 ---
 if st.button("입력 추가"):
     if name == "워커" and "💖" in selected_days:
@@ -79,7 +56,25 @@ if st.button("입력 추가"):
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
 
-rerun_needed = False  # 이 줄을 꼭 루프 전에 선언
+# --- 입력 리스트 및 삭제 기능 ---
+if st.session_state.entries:
+    st.markdown("#### 현재 입력된 일정")
+    for i, (s, n, d, t) in enumerate(st.session_state.entries):
+        col1, col2 = st.columns([8, 1])
+        with col1:
+            st.markdown(f"- **{s}** → {n} ({d}) → **{t}**")
+        with col2:
+            if st.button("❌", key=f"del_{i}"):
+                del st.session_state.entries[i]
+                rerun_needed = True
+                break  # 삭제 후 index 재계산 방지
+
+if rerun_needed:
+    st.experimental_rerun()
+
+# --- 연도 및 월 선택 ---
+year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
+month = st.selectbox("월 선택", list(range(1, 13)), index=5)
 
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
