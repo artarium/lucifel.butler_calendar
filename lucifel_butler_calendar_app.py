@@ -177,7 +177,7 @@ def draw_calendar(year, month, site_name, entries):
     plt.close()
     return img_file
 
-st.markdown("###### 각 캘린더 다운로드 후 버튼 누르고 출력 이미지가 사라지는데 다시 캘린더 출력 누르시면 됩니다.")
+st.markdown("###### 각 캘린더 다운로드 후 화면에서 이미지들이 사라지는데 다시 캘린더 출력 누르시면 재생성 됩니다.")
 # --- 출력 버튼 및 다운로드 ---
 if st.button("📅 캘린더 출력"):
     if not st.session_state.entries:
