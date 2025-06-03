@@ -65,8 +65,12 @@ if st.session_state.entries:
             st.markdown(f"- **{s}** → {n} ({d}) → **{t}**")
         with col2:
             if st.button("❌", key=f"del_{i}"):
-                st.session_state.entries.pop(i)
-                st.experimental_rerun()
+                del st.session_state.entries[i]
+                rerun_needed = True
+                break  # 삭제 후 index 재계산 방지
+
+if rerun_needed:
+    st.experimental_rerun()
 
 # --- 연도 및 월 선택 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
