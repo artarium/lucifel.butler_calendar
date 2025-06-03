@@ -38,7 +38,7 @@ name = st.selectbox("이름", list(name_dict_grouped[site].keys()))
 # 날짜 선택
 days_options = list(range(1, 32))
 if name == "워커":
-    days_options.append("오잉?")
+    days_options.append("💖")
 selected_days = st.multiselect("근무일 선택", days_options)
 
 deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
@@ -47,8 +47,7 @@ deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 if st.button("입력 추가"):
     if name == "워커" and "오잉?" in selected_days:
         slot = st.empty()
-        slot.balloons()
-        slot.markdown("## 🎈 워커 집사님 왕왕사랑해요 💖")
+        slot.markdown("## 💖 워커 집사님 왕왕사랑해요 💖")
         time.sleep(2)
         slot.empty()
     else:
