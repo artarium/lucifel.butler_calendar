@@ -5,6 +5,7 @@ from collections import defaultdict
 from matplotlib import patches
 import time
 from matplotlib import rcParams
+import uuid
 
 rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 
@@ -79,27 +80,19 @@ if st.session_state.entries:
         with col1:
             st.markdown(f"{n} ({d}) **{t}** 근무")
         with col2:
+
             if st.button("일정 삭제", key=f"del_{i}"):
                 st.session_state.to_delete = i
+                st.session_state["__force_rerender__"] = str(uuid.uuid4())  # 상태 변경 유도
 
-
-# 일정 삭제 요청 처리 (렌더링 이후, 안전하게 수행)
 if st.session_state.to_delete is not None:
     idx = st.session_state.to_delete
     if 0 <= idx < len(st.session_state.entries):
         del st.session_state.entries[idx]
     st.session_state.to_delete = None
-    st.experimental_rerun()  # 이 위치는 안전함
+    # rerun 대신 무시 (렌더링은 자연히 일어남)
 
-# 삭제 요청 처리 (렌더링 이후 안전하게)
-if st.session_state.to_delete is not None:
-    try:
-        del st.session_state.entries[st.session_state.to_delete]
-    except IndexError:
-        pass
-    st.session_state.to_delete = None
-    st.experimental_rerun()
-    
+
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
     cal = calendar.Calendar(firstweekday=6)
