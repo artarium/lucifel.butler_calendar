@@ -92,8 +92,10 @@ def draw_calendar(year, month, site_name, entries):
         if target != site_name:
             continue
         label = f"{name_dict.get(n, n)}"
-        for d in days:
-            cal_data[d].append((label, orig != target))
+        for d in set(days):  # 날짜 중복 제거
+            # 같은 날, 같은 이름이 이미 등록되어 있으면 추가하지 않음
+            if all(existing_label != label for existing_label, _ in cal_data[d]):
+                cal_data[d].append((label, orig != target))
 
     row_heights = []
     for week in weeks:
@@ -142,6 +144,7 @@ def draw_calendar(year, month, site_name, entries):
     plt.savefig(img_file, bbox_inches='tight', facecolor=fig.get_facecolor())
     plt.close()
     return img_file
+
 
 # --- 출력 버튼 및 다운로드 ---
 if st.button("📅 캘린더 출력"):
