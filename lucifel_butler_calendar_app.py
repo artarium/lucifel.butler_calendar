@@ -8,7 +8,6 @@ import os
 from matplotlib import rcParams
 import time
 
-
 rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 
 # --- 이름 사전 ---
@@ -27,20 +26,19 @@ name_dict_grouped = {
     }
 }
 
+# --- 세션 상태 초기화 ---
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
 st.markdown("### 루치펠 집사카페 캘린더 입력 시스템")
 
+# --- 입력 인터페이스 ---
 site = st.selectbox("근무지", ["Bestia", "Inferis", "Pax"])
 name = st.selectbox("이름", list(name_dict_grouped[site].keys()))
-
-# 날짜 선택
 days_options = list(range(1, 32))
 if name == "워커":
     days_options.append("💖")
 selected_days = st.multiselect("근무일 선택", days_options)
-
 deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 
 # --- 이스터에그 ---
@@ -58,14 +56,23 @@ if st.button("입력 추가"):
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
 
+# --- 입력 리스트 및 삭제 기능 ---
 if st.session_state.entries:
     st.markdown("#### 현재 입력된 일정")
-    st.dataframe(st.session_state.entries, use_container_width=True)
+    for i, (s, n, d, t) in enumerate(st.session_state.entries):
+        col1, col2 = st.columns([8, 1])
+        with col1:
+            st.markdown(f"- **{s}** → {n} ({d}) → **{t}**")
+        with col2:
+            if st.button("❌", key=f"del_{i}"):
+                st.session_state.entries.pop(i)
+                st.experimental_rerun()
 
-# 연도/월 선택
+# --- 연도 및 월 선택 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
 month = st.selectbox("월 선택", list(range(1, 13)), index=5)
 
+# --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
     cal = calendar.Calendar(firstweekday=6)
     weeks = cal.monthdayscalendar(year, month)
@@ -78,7 +85,7 @@ def draw_calendar(year, month, site_name, entries):
     for orig, n, days, target in entries:
         if target != site_name:
             continue
-        label = f"{orig[0]}-{name_dict.get(n, n)}"
+        label = f"{name_dict.get(n, n)}"  # 알파벳 제거
         for d in days:
             cal_data[d].append((label, orig != target))
 
@@ -130,14 +137,18 @@ def draw_calendar(year, month, site_name, entries):
     plt.close()
     return img_file
 
+# --- 출력 버튼 및 다운로드 ---
 if st.button("📅 캘린더 출력"):
-    for target_site in ["Pax", "Inferis", "Bestia"]:
-        img_file = draw_calendar(year, month, target_site, st.session_state.entries)
-        st.image(img_file, caption=f"{target_site} 근무 캘린더")
-        with open(img_file, "rb") as f:
-            st.download_button(
-                label=f"📥 {target_site} 다운로드",
-                data=f.read(),
-                file_name=img_file,
-                mime="image/png"
-            )
+    if not st.session_state.entries:
+        st.warning("⚠️ 먼저 '입력 추가' 버튼을 눌러 일정을 등록해주세요.")
+    else:
+        for target_site in ["Pax", "Inferis", "Bestia"]:
+            img_file = draw_calendar(year, month, target_site, st.session_state.entries)
+            st.image(img_file, caption=f"{target_site} 근무 캘린더")
+            with open(img_file, "rb") as f:
+                st.download_button(
+                    label=f"📥 {target_site} 다운로드",
+                    data=f.read(),
+                    file_name=img_file,
+                    mime="image/png"
+                )
