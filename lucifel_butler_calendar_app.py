@@ -66,8 +66,10 @@ elif st.button("입력 추가"):
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
 
+# 삭제 예약용 키 초기화
 if "to_delete" not in st.session_state:
     st.session_state.to_delete = None
+
 
 # 일정 출력 및 삭제 버튼
 if st.session_state.entries:
@@ -79,7 +81,15 @@ if st.session_state.entries:
         with col2:
             if st.button("일정 삭제", key=f"del_{i}"):
                 st.session_state.to_delete = i
-                st.experimental_rerun()
+
+
+# 일정 삭제 요청 처리 (렌더링 이후, 안전하게 수행)
+if st.session_state.to_delete is not None:
+    idx = st.session_state.to_delete
+    if 0 <= idx < len(st.session_state.entries):
+        del st.session_state.entries[idx]
+    st.session_state.to_delete = None
+    st.experimental_rerun()  # 이 위치는 안전함
 
 # 삭제 요청 처리 (렌더링 이후 안전하게)
 if st.session_state.to_delete is not None:
