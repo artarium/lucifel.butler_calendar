@@ -3,10 +3,8 @@ import matplotlib.pyplot as plt
 import calendar
 from collections import defaultdict
 from matplotlib import patches
-import uuid
-import os
-from matplotlib import rcParams
 import time
+from matplotlib import rcParams
 
 rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 
@@ -30,23 +28,50 @@ name_dict_grouped = {
 if "entries" not in st.session_state:
     st.session_state.entries = []
 
+# --- 연도 및 월 선택: 최상단 ---
+year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
+month = st.selectbox("월 선택", list(range(1, 13)), index=5)
+
 st.markdown("### 루치펠 집사카페 캘린더 입력 시스템")
 
+st.markdown("""######  
+1. 상단에서 연도와 월을 선택합니다.  
+2. 근무자의 **원 근무지**, **이름**, **근무일**, **해당일 근무지**를 입력합니다.  
+3. 아래 **[입력 추가]** 버튼을 눌러 일정을 등록합니다.  
+4. 모든 등록이 끝나면 **[📅 캘린더 출력]** 버튼으로 결과를 확인하고 다운로드할 수 있습니다.
+""")
+
 # --- 입력 인터페이스 ---
-site = st.selectbox("근무지", ["Bestia", "Inferis", "Pax"])
+site = st.selectbox("원 근무지", ["Bestia", "Inferis", "Pax"])
 name = st.selectbox("이름", list(name_dict_grouped[site].keys()))
 days_options = list(range(1, 32))
 if name == "워커":
     days_options.append("💖")
 selected_days = st.multiselect("근무일 선택", days_options)
-deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
+deploy = st.selectbox("해당일 근무지", ["Bestia", "Inferis", "Pax"])
 
-# --- 이스터에그 ---
-if st.button("입력 추가"):
+# --- 현재 입력된 항목 표시 및 삭제 기능 ---
+if st.session_state.entries:
+    st.markdown("#### 현재 입력된 일정")
+    for i, (s, n, d, t) in enumerate(st.session_state.entries):
+        col1, col2 = st.columns([8, 1])
+        with col1:
+            st.markdown(f"- **{s}** 근무 → {n} ({d}) → **{t}** 해당일 근무")
+        with col2:
+            if st.button("❌", key=f"del_{i}"):
+                st.session_state.entries.pop(i)
+                st.stop()  # 안전한 재실행 유도
+
+st.markdown("---")
+
+# --- 입력 추가 버튼 (출력 버튼 바로 위에 위치) ---
+if not selected_days:
+    st.warning("⚠️ 근무일을 선택해야 입력이 가능합니다.")
+elif st.button("입력 추가"):
     if name == "워커" and "💖" in selected_days:
         slot = st.empty()
         slot.markdown("##### 💖 워커 집사님 왕왕사랑해요 💖")
-        time.sleep(2)
+        time.sleep(1)
         slot.empty()
     else:
         try:
@@ -55,27 +80,6 @@ if st.button("입력 추가"):
             st.success(f"✅ 추가됨: ({site}, {name}, {days}, {deploy})")
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
-            
-rerun_needed = False
-# --- 입력 리스트 및 삭제 기능 ---
-if st.session_state.entries:
-    st.markdown("#### 현재 입력된 일정")
-    for i, (s, n, d, t) in enumerate(st.session_state.entries):
-        col1, col2 = st.columns([8, 1])
-        with col1:
-            st.markdown(f"- **{s}** → {n} ({d}) → **{t}**")
-        with col2:
-            if st.button("❌", key=f"del_{i}"):
-                del st.session_state.entries[i]
-                rerun_needed = True
-                break  # 삭제 후 index 재계산 방지
-
-if rerun_needed:
-    st.experimental_rerun()
-
-# --- 연도 및 월 선택 ---
-year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
-month = st.selectbox("월 선택", list(range(1, 13)), index=5)
 
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
@@ -90,7 +94,7 @@ def draw_calendar(year, month, site_name, entries):
     for orig, n, days, target in entries:
         if target != site_name:
             continue
-        label = f"{name_dict.get(n, n)}"  # 알파벳 제거
+        label = f"{name_dict.get(n, n)}"
         for d in days:
             cal_data[d].append((label, orig != target))
 
