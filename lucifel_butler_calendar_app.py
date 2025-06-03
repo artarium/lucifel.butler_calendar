@@ -32,7 +32,7 @@ if "entries" not in st.session_state:
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
 month = st.selectbox("월 선택", list(range(1, 13)), index=5)
 
-st.markdown("### 루치펠 집사카페 캘린더 입력 시스템")
+st.markdown("#### 루치펠 집사카페 캘린더 입력 시스템")
 
 st.markdown("""######  
 1. 상단에서 연도와 월을 선택합니다.  
