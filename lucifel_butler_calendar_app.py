@@ -41,6 +41,18 @@ st.markdown("""######
 4. 모든 등록이 끝나면 **[📅 캘린더 출력]** 버튼으로 결과를 확인하고 다운로드할 수 있습니다.
 """)
 
+st.markdown("### 📘 어플 설명 슬라이드")
+
+slide_images = {
+    "슬라이드 1": "슬라이드1.PNG",
+    "슬라이드 2": "슬라이드2.PNG",
+    "슬라이드 3": "슬라이드3.PNG"
+}
+
+slide_keys = list(slide_images.keys())
+selected_slide = st.select_slider("← 설명을 좌우로 넘겨보세요 →", options=slide_keys)
+
+st.image(slide_images[selected_slide], use_column_width=True)
 
 # --- 연도 및 월 선택: 최상단 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
