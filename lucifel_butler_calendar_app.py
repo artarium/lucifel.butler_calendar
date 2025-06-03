@@ -66,7 +66,10 @@ elif st.button("입력 추가"):
         except:
             st.error("❌ 근무일은 숫자여야 합니다.")
 
-# --- 현재 입력된 항목 표시 및 삭제 기능 ---
+if "to_delete" not in st.session_state:
+    st.session_state.to_delete = None
+
+# 일정 출력 및 삭제 버튼
 if st.session_state.entries:
     st.markdown("#### 현재 입력된 일정")
     for i, (s, n, d, t) in enumerate(st.session_state.entries):
@@ -75,11 +78,18 @@ if st.session_state.entries:
             st.markdown(f"{n} ({d}) **{t}** 근무")
         with col2:
             if st.button("일정 삭제", key=f"del_{i}"):
-                st.session_state.entries.pop(i)
-                time.sleep(0.3)
-                st.experimental_rerun()  # 즉시 재렌더링 → 삭제 항목 화면에서 즉시 사라짐
+                st.session_state.to_delete = i
+                st.experimental_rerun()
 
-
+# 삭제 요청 처리 (렌더링 이후 안전하게)
+if st.session_state.to_delete is not None:
+    try:
+        del st.session_state.entries[st.session_state.to_delete]
+    except IndexError:
+        pass
+    st.session_state.to_delete = None
+    st.experimental_rerun()
+    
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
     cal = calendar.Calendar(firstweekday=6)
