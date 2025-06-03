@@ -75,7 +75,7 @@ if st.session_state.entries:
     for i, (s, n, d, t) in enumerate(st.session_state.entries):
         col1, col2 = st.columns([8, 1])
         with col1:
-            st.markdown(f"{n} ({d}) 해당일 **{t}** 해당일 근무")
+            st.markdown(f"{n} ({d}) 해당일 **{t}** 근무")
         with col2:
             if st.button("❌", key=f"del_{i}"):
                 st.session_state.entries.pop(i)
