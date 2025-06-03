@@ -29,7 +29,7 @@ if "entries" not in st.session_state:
     st.session_state.entries = []
 
 
-st.markdown("### 루치펠 집사카페 캘린더 입력 시스템")
+st.markdown("#### 루치펠 집사카페 캘린더 입력 시스템")
 
 st.markdown("""######  
 1. 연도와 월을 선택합니다.  
