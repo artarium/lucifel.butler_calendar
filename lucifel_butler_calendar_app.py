@@ -15,7 +15,7 @@ rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 name_dict_grouped = {
     "Bestia": {
         "쿠로": "Kuro", "레오": "Leo", "아이작": "Isaac", "하쿠": "Haku",
-        "발렌타인": "Valen", "닉": "Nick", "샤오루": "Xiaolu", "카게": "Kage", "카프": "Kafka"
+        "발렌타인": "Valen", "닉": "Nick", "샤오루": "Xiaolu", "카게": "Kage", "카프카": "Kafka"
     },
     "Inferis": {
         "카이엘": "Kaiel", "루시": "Lucy", "데이": "Dei", "워커": "Walker",
