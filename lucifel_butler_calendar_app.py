@@ -41,22 +41,7 @@ if name == "워커":
 selected_days = st.multiselect("근무일 선택", days_options)
 deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 
-# --- 이스터에그 ---
-if st.button("입력 추가"):
-    if name == "워커" and "💖" in selected_days:
-        slot = st.empty()
-        slot.markdown("##### 💖 워커 집사님 왕왕사랑해요 💖")
-        time.sleep(2)
-        slot.empty()
-    else:
-        try:
-            days = [int(d) for d in selected_days if isinstance(d, int)]
-            st.session_state.entries.append((site, name, days, deploy))
-            st.success(f"✅ 추가됨: ({site}, {name}, {days}, {deploy})")
-        except:
-            st.error("❌ 근무일은 숫자여야 합니다.")
 
-rerun_needed = False  # 이 줄을 꼭 루프 전에 선언
 
 if st.session_state.entries:
     st.markdown("#### 현재 입력된 일정")
@@ -77,6 +62,24 @@ if rerun_needed:
 # --- 연도 및 월 선택 ---
 year = st.selectbox("연도 선택", list(range(2023, 2031)), index=2)
 month = st.selectbox("월 선택", list(range(1, 13)), index=5)
+
+
+# --- 이스터에그 ---
+if st.button("입력 추가"):
+    if name == "워커" and "💖" in selected_days:
+        slot = st.empty()
+        slot.markdown("##### 💖 워커 집사님 왕왕사랑해요 💖")
+        time.sleep(2)
+        slot.empty()
+    else:
+        try:
+            days = [int(d) for d in selected_days if isinstance(d, int)]
+            st.session_state.entries.append((site, name, days, deploy))
+            st.success(f"✅ 추가됨: ({site}, {name}, {days}, {deploy})")
+        except:
+            st.error("❌ 근무일은 숫자여야 합니다.")
+
+rerun_needed = False  # 이 줄을 꼭 루프 전에 선언
 
 # --- 캘린더 그리기 함수 ---
 def draw_calendar(year, month, site_name, entries):
