@@ -1,10 +1,13 @@
 import streamlit as st
+import matplotlib.pyplot as plt
 import calendar
 from collections import defaultdict
+from matplotlib import patches
 import uuid
 import os
 from matplotlib import rcParams
 import time
+
 
 rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 
