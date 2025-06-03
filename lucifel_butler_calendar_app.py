@@ -47,7 +47,7 @@ deploy = st.selectbox("파견지", ["Bestia", "Inferis", "Pax"])
 if st.button("입력 추가"):
     if name == "워커" and "💖" in selected_days:
         slot = st.empty()
-        slot.markdown("## 💖 워커 집사님 왕왕사랑해요 💖")
+        slot.markdown("##### 💖 워커 집사님 왕왕사랑해요 💖")
         time.sleep(2)
         slot.empty()
     else:
@@ -59,7 +59,7 @@ if st.button("입력 추가"):
             st.error("❌ 근무일은 숫자여야 합니다.")
 
 if st.session_state.entries:
-    st.markdown("### 현재 입력된 일정")
+    st.markdown("#### 현재 입력된 일정")
     st.dataframe(st.session_state.entries, use_container_width=True)
 
 # 연도/월 선택
