@@ -12,17 +12,15 @@ rcParams['font.family'] = ['Times New Roman', 'Malgun Gothic']
 # --- 이름 사전 ---
 name_dict_grouped = {
     "Bestia": {
-        "쿠로": "Kuro", "레오": "Leo", "아이작": "Isaac", "하쿠": "Haku",
-        "발렌타인": "Valen", "닉": "Nick", "샤오루": "Xiaolu", "카게": "Kage", "카프카": "Kafka"
+        "쿠로": "Kuro", "레오": "Leo", "아이작": "Isaac",
+        "발렌타인": "Valen", "닉": "Nick", "샤오루": "Xiaolu", "코요": "Koyo", "달래":"Dalrae"
     },
     "Inferis": {
-        "카이엘": "Kaiel", "루시": "Lucy", "데이": "Dei", "워커": "Walker",
-        "레이": "Ray", "케로": "Kero", "렌": "Ren", "라무": "Ramu"
+        "카이엘": "Kaiel", "루시": "Lucy",  "워커": "Walker",
+        "렌": "Ren", "라무": "Ramu"
     },
     "Pax": {
-        "로쿠": "Roku", "유키": "Yuki", "제로": "Zero", "미호": "Miho",
-        "호리": "Hori", "쥬노": "Zeuno", "제리": "Jerry"
-    }
+        "로쿠": "Roku",  "제로": "Zero", "미호": "Miho", "제리": "Jerry", "레이": "Ray","슈가" : "Sugar"    }
 }
 
 # --- 세션 상태 초기화 ---
